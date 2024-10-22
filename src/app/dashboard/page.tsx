@@ -1,5 +1,7 @@
 import { CirclePlus } from "lucide-react";
 import Link from "next/link";
+import { db } from "@/db";
+import { Invoices } from "@/db/schema";
 import {
   Table,
   TableBody,
@@ -12,7 +14,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
-const Dashboard = () => {
+const DashboardPage = async () => {
+  const results = await db.select().from(Invoices);
+
   return (
     <main className="flex flex-col justify-center h-full text-center gap-6 max-w-5xl mx-auto my-12">
       <div className="flex justify-between">
@@ -37,27 +41,33 @@ const Dashboard = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow>
-            <TableCell className="text-left font-medium p-4">
-              <span className="font-semibold">10/31/2024</span>
-            </TableCell>
-            <TableCell className="text-left p-4">
-              <span className="font-semibold">John Doe</span>
-            </TableCell>
-            <TableCell className="text-left  p-4">
-              <span>johndoe@testmail.com</span>
-            </TableCell>
-            <TableCell className="text-center p-4">
-              <Badge className="rounded-full">Open</Badge>
-            </TableCell>
-            <TableCell className="text-right p-4">
-              <span>$250.00</span>
-            </TableCell>
-          </TableRow>
+          {results.map((result) => (
+            <TableRow key={result.id}>
+              <TableCell className="text-left font-medium p-4">
+                <span className="font-semibold">
+                  {new Date(result.createTs).toLocaleDateString()}
+                </span>
+              </TableCell>
+              <TableCell className="text-left p-4">
+                <span className="font-semibold">John Doe</span>
+              </TableCell>
+              <TableCell className="text-left  p-4">
+                <span>johndoe@testmail.com</span>
+              </TableCell>
+              <TableCell className="text-center p-4">
+                <Badge className="rounded-full">{result.status}</Badge>
+              </TableCell>
+              <TableCell className="text-right p-4">
+                <span className="font-semibold">
+                  $ {(result.value / 100).toFixed(2)}
+                </span>
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </main>
   );
 };
 
-export default Dashboard;
+export default DashboardPage;
