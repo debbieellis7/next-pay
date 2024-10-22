@@ -14,7 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
-const DashboardPage = async () => {
+export default async function DashboardPage() {
   const results = await db.select().from(Invoices);
 
   return (
@@ -43,24 +43,39 @@ const DashboardPage = async () => {
         <TableBody>
           {results.map((result) => (
             <TableRow key={result.id}>
-              <TableCell className="text-left font-medium p-4">
-                <span className="font-semibold">
+              <TableCell className="text-left font-medium p-0">
+                <Link
+                  href={`/invoices/${result.id}`}
+                  className="font-semibold block p-4"
+                >
                   {new Date(result.createTs).toLocaleDateString()}
-                </span>
+                </Link>
               </TableCell>
-              <TableCell className="text-left p-4">
-                <span className="font-semibold">John Doe</span>
+              <TableCell className="text-left p-0">
+                <Link
+                  href={`/invoices/${result.id}`}
+                  className="font-semibold block p-4"
+                >
+                  John Doe
+                </Link>
               </TableCell>
-              <TableCell className="text-left  p-4">
-                <span>johndoe@testmail.com</span>
+              <TableCell className="text-left p-0">
+                <Link href={`/invoices/${result.id}`} className="block p-4">
+                  johndoe@testmail.com
+                </Link>
               </TableCell>
-              <TableCell className="text-center p-4">
-                <Badge className="rounded-full">{result.status}</Badge>
+              <TableCell className="text-center p-0">
+                <Link href={`/invoices/${result.id}`} className="block p-4">
+                  <Badge className="rounded-full">{result.status}</Badge>
+                </Link>
               </TableCell>
-              <TableCell className="text-right p-4">
-                <span className="font-semibold">
+              <TableCell className="text-right p-0">
+                <Link
+                  href={`/invoices/${result.id}`}
+                  className="font-semibold block p-4"
+                >
                   $ {(result.value / 100).toFixed(2)}
-                </span>
+                </Link>
               </TableCell>
             </TableRow>
           ))}
@@ -68,6 +83,4 @@ const DashboardPage = async () => {
       </Table>
     </main>
   );
-};
-
-export default DashboardPage;
+}
