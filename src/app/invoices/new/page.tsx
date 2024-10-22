@@ -1,25 +1,24 @@
 "use client";
-import { SyntheticEvent, useState } from "react";
 import Form from "next/form";
+import { SyntheticEvent, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
 import SubmitButton from "@/components/SubmitButton";
 import { createAction } from "@/app/actions";
 
-export default async function NewInvoicePage() {
+export default function NewInvoicePage() {
   const [pending, setPending] = useState(false);
 
   // Prevent multiple form submission
-  const handleOnSubmit = async (e: SyntheticEvent) => {
+  function handleOnSubmit(e: SyntheticEvent) {
     if (pending) {
       e.preventDefault();
       return;
     }
 
     setPending(true);
-  };
+  }
 
   return (
     <main className="flex flex-col justify-center h-full gap-6 max-w-5xl mx-auto my-12">
