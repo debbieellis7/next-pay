@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import SubmitButton from "@/components/SubmitButton";
 import { createAction } from "@/app/actions";
 
-const NewInvoicePage = () => {
+export default async function NewInvoicePage() {
   const [pending, setPending] = useState(false);
 
   // Prevent multiple form submission
@@ -64,6 +64,4 @@ const NewInvoicePage = () => {
       </Form>
     </main>
   );
-};
-
-export default NewInvoicePage;
+}
