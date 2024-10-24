@@ -17,7 +17,8 @@ export const statusEnum = pgEnum("status", [
 export const Invoices = pgTable("invoices", {
   id: serial("id").primaryKey().notNull(),
   createTs: timestamp("createTs").defaultNow().notNull(),
-  status: statusEnum("status").notNull(),
   value: integer("value").notNull(),
   description: text("description").notNull(),
+  userId: text("userId").notNull(),
+  status: statusEnum("status").notNull(),
 });
