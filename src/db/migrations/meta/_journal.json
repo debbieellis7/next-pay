@@ -15,6 +15,13 @@
       "when": 1729773317523,
       "tag": "0001_lean_colleen_wing",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1729778612259,
+      "tag": "0002_unique_mikhail_rasputin",
+      "breakpoints": true
     }
   ]
 }
