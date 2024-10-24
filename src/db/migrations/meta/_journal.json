@@ -5,15 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1729586691119,
-      "tag": "0000_orange_mephisto",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1729736547756,
-      "tag": "0001_brave_northstar",
+      "when": 1729758523867,
+      "tag": "0000_black_stick",
       "breakpoints": true
     }
   ]

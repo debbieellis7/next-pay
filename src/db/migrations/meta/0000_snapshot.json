@@ -1,5 +1,5 @@
 {
-  "id": "7a8637f4-68e9-4247-a3cc-b0bce1325e9f",
+  "id": "4f7ad574-0ab5-402a-9310-1d210e5f95fe",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -21,13 +21,6 @@
           "notNull": true,
           "default": "now()"
         },
-        "status": {
-          "name": "status",
-          "type": "status",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": true
-        },
         "value": {
           "name": "value",
           "type": "integer",
@@ -37,6 +30,19 @@
         "description": {
           "name": "description",
           "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "userId": {
+          "name": "userId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "status",
+          "typeSchema": "public",
           "primaryKey": false,
           "notNull": true
         }
@@ -54,7 +60,7 @@
       "schema": "public",
       "values": [
         "open",
-        "piad",
+        "paid",
         "void",
         "uncollectible"
       ]
