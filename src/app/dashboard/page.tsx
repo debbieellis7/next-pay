@@ -3,7 +3,7 @@ import { eq } from "drizzle-orm";
 import { CirclePlus } from "lucide-react";
 import Link from "next/link";
 import { db } from "@/db";
-import { Invoices } from "@/db/schema";
+import { Invoices, Customers } from "@/db/schema";
 import Container from "@/components/Container";
 import {
   Table,
@@ -25,7 +25,15 @@ export default async function DashboardPage() {
   const results = await db
     .select()
     .from(Invoices)
+    .innerJoin(Customers, eq(Invoices.customerId, Customers.id))
     .where(eq(Invoices.userId, userId));
+
+  const invoices = results.map(({ invoices, customers }) => {
+    return {
+      ...invoices,
+      customer: customers,
+    };
+  });
 
   return (
     <main className="h-full">
@@ -52,40 +60,40 @@ export default async function DashboardPage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {results.map((result) => (
-              <TableRow key={result.id}>
+            {invoices.map((invoice) => (
+              <TableRow key={invoice.id}>
                 <TableCell className="text-left font-medium p-0">
                   <Link
-                    href={`/invoices/${result.id}`}
+                    href={`/invoices/${invoice.id}`}
                     className="font-semibold block p-4"
                   >
-                    {new Date(result.createTs).toLocaleDateString()}
+                    {new Date(invoice.createTs).toLocaleDateString()}
                   </Link>
                 </TableCell>
                 <TableCell className="text-left p-0">
                   <Link
-                    href={`/invoices/${result.id}`}
+                    href={`/invoices/${invoice.id}`}
                     className="font-semibold block p-4"
                   >
-                    John Doe
+                    {invoice.customer.name}
                   </Link>
                 </TableCell>
                 <TableCell className="text-left p-0">
-                  <Link href={`/invoices/${result.id}`} className="block p-4">
-                    johndoe@testmail.com
+                  <Link href={`/invoices/${invoice.id}`} className="block p-4">
+                    {invoice.customer.email}
                   </Link>
                 </TableCell>
                 <TableCell className="text-center p-0">
-                  <Link href={`/invoices/${result.id}`} className="block p-4">
-                    <Badge className="rounded-full">{result.status}</Badge>
+                  <Link href={`/invoices/${invoice.id}`} className="block p-4">
+                    <Badge className="rounded-full">{invoice.status}</Badge>
                   </Link>
                 </TableCell>
                 <TableCell className="text-right p-0">
                   <Link
-                    href={`/invoices/${result.id}`}
+                    href={`/invoices/${invoice.id}`}
                     className="font-semibold block p-4"
                   >
-                    $ {(result.value / 100).toFixed(2)}
+                    $ {(invoice.value / 100).toFixed(2)}
                   </Link>
                 </TableCell>
               </TableRow>
