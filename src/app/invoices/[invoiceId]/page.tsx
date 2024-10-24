@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { db } from "@/db";
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
+import { auth } from "@clerk/nextjs/server";
 import { Invoices } from "@/db/schema";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -10,6 +11,10 @@ export default async function InvoicePage({
 }: {
   params: { invoiceId: string };
 }) {
+  const { userId } = await auth();
+
+  if (!userId) return;
+
   const { invoiceId } = await params;
   const parsedInvoiceId = parseInt(invoiceId);
 
@@ -20,7 +25,7 @@ export default async function InvoicePage({
   const [result] = await db
     .select()
     .from(Invoices)
-    .where(eq(Invoices.id, parsedInvoiceId))
+    .where(and(eq(Invoices.id, parsedInvoiceId), eq(Invoices.userId, userId)))
     .limit(1);
 
   if (!result) {

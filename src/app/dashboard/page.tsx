@@ -1,3 +1,5 @@
+import { auth } from "@clerk/nextjs/server";
+import { eq } from "drizzle-orm";
 import { CirclePlus } from "lucide-react";
 import Link from "next/link";
 import { db } from "@/db";
@@ -16,7 +18,14 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
 export default async function DashboardPage() {
-  const results = await db.select().from(Invoices);
+  const { userId } = await auth();
+
+  if (!userId) return;
+
+  const results = await db
+    .select()
+    .from(Invoices)
+    .where(eq(Invoices.userId, userId));
 
   return (
     <main className="h-full">
