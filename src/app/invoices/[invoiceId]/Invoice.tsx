@@ -1,6 +1,7 @@
 "use client";
 import { useOptimistic } from "react";
-import { ChevronDown, Ellipsis, Trash2 } from "lucide-react";
+import { ChevronDown, CreditCard, Ellipsis, Trash2 } from "lucide-react";
+import Link from "next/link";
 import { Invoices, Customers } from "@/db/schema";
 import Container from "@/components/Container";
 import { Badge } from "@/components/ui/badge";
@@ -105,6 +106,15 @@ export default function Invoice({ invoice }: InvoiceProps) {
                         Delete Invoice
                       </button>
                     </DialogTrigger>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link
+                      href={`/invoices/${invoice.id}/payment`}
+                      className="flex items-center gap-2"
+                    >
+                      <CreditCard className="w-4 h-auto" />
+                      Payment
+                    </Link>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
