@@ -115,8 +115,8 @@ export async function deleteInvoiceAction(formData: FormData) {
 }
 
 export async function createPayment(formData: FormData) {
-  const headersList = headers();
-  const origin = (await headersList).get("origin");
+  const headersList = await headers();
+  const origin = headersList.get("origin");
   const id = parseInt(formData.get("id") as string);
 
   const [result] = await db
@@ -140,8 +140,8 @@ export async function createPayment(formData: FormData) {
       },
     ],
     mode: "payment",
-    success_url: `${origin}/invoices/${id}/payment?success=true`,
-    cancel_url: `${origin}/invoices/${id}/payment?canceled=true`,
+    success_url: `${origin}/invoices/${id}/payment?status=success&session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${origin}/invoices/${id}/payment?status=canceled&session_id={CHECKOUT_SESSION_ID}`,
   });
 
   if (!session.url) {
