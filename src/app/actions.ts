@@ -5,10 +5,13 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 import Stripe from "stripe";
+import { Resend } from "resend";
 import { db } from "@/db";
 import { Invoices, Customers, Status } from "@/db/schema";
+import { InvoiceCreatedEmail } from "@/emails/invoice-created";
 
 const stripe = new Stripe(String(process.env.STRIPE_API_SECRET));
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function createAction(formData: FormData) {
   const { userId, orgId } = await auth();
@@ -47,6 +50,13 @@ export async function createAction(formData: FormData) {
     .returning({
       id: Invoices.id,
     });
+
+  const { data, error } = await resend.emails.send({
+    from: "NextPay <support@nextpay.live>",
+    to: [email],
+    subject: "You Have a New Invoice",
+    react: InvoiceCreatedEmail({ invoiceId: results[0].id }),
+  });
 
   redirect(`/invoices/${results[0].id}`);
 }
