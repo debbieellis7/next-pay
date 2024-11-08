@@ -1,4 +1,6 @@
 "use client";
+
+// External dependencies
 import NextError from "next/error";
 
 export default function ErrorPage({ error }: { error: Error }) {

@@ -1,6 +1,10 @@
 "use client";
+
+// External dependencies
 import { useFormStatus } from "react-dom";
 import { LoaderCircle } from "lucide-react";
+
+// Internal components
 import { Button } from "@/components/ui/button";
 
 const SubmitButton = () => {

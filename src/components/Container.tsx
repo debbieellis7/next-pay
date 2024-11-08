@@ -1,13 +1,15 @@
-import { cn } from "@/lib/utils";
+import { ReactNode } from "react";
 
-interface ContainerProps extends React.ComponentProps<"div"> {}
+interface ContainerProps {
+  children: ReactNode;
+}
 
-const Container = ({ children, className, ...props }: ContainerProps) => {
-  return (
-    <div {...props} className={cn("max-w-5xl mx-auto px-5", className)}>
+const Container = ({ children }: ContainerProps) => (
+  <main className="flex-grow">
+    <div className="max-w-screen-xl px-4 pt-20 pb-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:pt-28">
       {children}
     </div>
-  );
-};
+  </main>
+);
 
 export default Container;

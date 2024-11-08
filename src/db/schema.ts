@@ -1,3 +1,4 @@
+// External dependencies
 import {
   pgTable,
   pgEnum,
@@ -6,6 +7,8 @@ import {
   integer,
   text,
 } from "drizzle-orm/pg-core";
+
+// Project-specific data
 import { AVAILABLE_STATUSES } from "@/data/invoices";
 
 export type Status = (typeof AVAILABLE_STATUSES)[number]["id"];

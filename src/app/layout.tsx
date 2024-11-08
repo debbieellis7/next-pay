@@ -1,20 +1,12 @@
+// External dependencies
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
-import localFont from "next/font/local";
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
-import "./globals.css";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+// Internal components
+import ConditionalLayout from "@/components/ConditionalLayout";
+
+// Styles
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -29,12 +21,8 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen grid grid-rows-[auto_1fr_auto]`}
-        >
-          <Header />
-          {children}
-          <Footer />
+        <body className="antialiased flex flex-col min-h-screen">
+          <ConditionalLayout>{children}</ConditionalLayout>
         </body>
       </html>
     </ClerkProvider>

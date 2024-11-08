@@ -1,42 +1,57 @@
+// External dependencies
 import {
-  ClerkProvider,
   OrganizationSwitcher,
-  SignInButton,
   SignedIn,
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
 import Link from "next/link";
-import Container from "./Container";
+import Image from "next/image";
 
-const Header = () => {
-  return (
-    <header className="mt-8 mb-12">
-      <Container>
-        <div className="flex justify-between items-center gap-4">
-          <div className="flex items-center gap-4">
-            <p className="font-bold">
-              <Link href="/dashboard">NextPay</Link>
-            </p>
+// Internal components
+import { Button } from "./ui/button";
+
+// Assets
+import logo from "@/assets/logo.svg";
+
+const Header = () => (
+  <header className="fixed w-full">
+    <nav className="bg-white border-gray-200 py-2.5 dark:bg-gray-900">
+      <div className="flex flex-wrap items-center justify-between max-w-screen-xl px-4 mx-auto">
+        <div className="flex items-center gap-4">
+          <Link href="/dashboard" className="flex items-center">
+            <Image src={logo} className="h-6 mr-3 sm:h-9" alt="NextPay logo" />
+            <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
+              NextPay
+            </span>
+          </Link>
+          <SignedIn>
             <span className="text-slate-300">/</span>
-            <SignedIn>
-              <span className="-ml-2">
-                <OrganizationSwitcher afterCreateOrganizationUrl="/dashboard" />
-              </span>
-            </SignedIn>
-          </div>
-          <div>
-            <SignedOut>
-              <SignInButton />
-            </SignedOut>
-            <SignedIn>
-              <UserButton />
-            </SignedIn>
-          </div>
+            <span className="-ml-2">
+              <OrganizationSwitcher afterCreateOrganizationUrl="/dashboard" />
+            </span>
+          </SignedIn>
         </div>
-      </Container>
-    </header>
-  );
-};
+        <div className="flex items-center lg:order-2">
+          <SignedOut>
+            <Button className="text-white bg-purple-700 hover:bg-purple-800">
+              <Link
+                href="https://github.com/debbieellis7/next-pay"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Download
+              </Link>
+            </Button>
+          </SignedOut>
+
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+        </div>
+      </div>
+    </nav>
+  </header>
+);
 
 export default Header;

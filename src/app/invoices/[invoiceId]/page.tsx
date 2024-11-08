@@ -1,8 +1,13 @@
+// External dependencies
 import { notFound } from "next/navigation";
-import { db } from "@/db";
 import { eq, and, isNull } from "drizzle-orm";
 import { auth } from "@clerk/nextjs/server";
+
+// Database configuration and schema
+import { db } from "@/db";
 import { Invoices, Customers } from "@/db/schema";
+
+// Internal components
 import Invoice from "./Invoice";
 
 export default async function InvoicePage({

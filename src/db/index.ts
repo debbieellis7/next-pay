@@ -1,5 +1,8 @@
+// External dependencies
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
+
+// Database schema
 import { Invoices, Customers } from "./schema";
 
 const pool = new Pool({
