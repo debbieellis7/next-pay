@@ -74,6 +74,7 @@ body {
 }
 
 /* Hide the Clerk development mode notice inside the Sign In and Sign Up footers */
-.cl-footer > :nth-child(2) {
+.cl-footer > :nth-child(2),
+.cl-footer .cl-internal-1dauvpw {
   display: none;
 }
