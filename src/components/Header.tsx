@@ -32,23 +32,9 @@ const Header = () => (
             </span>
           </SignedIn>
         </div>
-        <div className="flex items-center lg:order-2">
-          <SignedOut>
-            <Button className="text-white bg-purple-700 hover:bg-purple-800">
-              <Link
-                href="https://github.com/debbieellis7/next-pay"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Download
-              </Link>
-            </Button>
-          </SignedOut>
-
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
-        </div>
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
       </div>
     </nav>
   </header>
