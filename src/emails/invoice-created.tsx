@@ -7,7 +7,6 @@ import {
   Heading,
   Hr,
   Html,
-  Img,
   Link,
   Preview,
   Section,
@@ -56,16 +55,10 @@ InvoiceCreatedEmail.PreviewProps = {
 
 export default InvoiceCreatedEmail;
 
-const logo = {
-  borderRadius: 21,
-  width: 42,
-  height: 42,
-};
-
 const main = {
   backgroundColor: "#ffffff",
   fontFamily:
-    '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif',
+    "-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen-Sans,Ubuntu,Cantarell,\"Helvetica Neue\",sans-serif",
 };
 
 const container = {
@@ -114,15 +107,4 @@ const reportLink = {
 const hr = {
   borderColor: "#dfe1e4",
   margin: "42px 0 26px",
-};
-
-const code = {
-  fontFamily: "monospace",
-  fontWeight: "700",
-  padding: "1px 4px",
-  backgroundColor: "#dfe1e4",
-  letterSpacing: "-0.3px",
-  fontSize: "21px",
-  borderRadius: "4px",
-  color: "#3c4149",
 };

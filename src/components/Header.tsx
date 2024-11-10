@@ -1,15 +1,7 @@
 // External dependencies
-import {
-  OrganizationSwitcher,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs";
+import { OrganizationSwitcher, SignedIn, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import Image from "next/image";
-
-// Internal components
-import { Button } from "./ui/button";
 
 // Assets
 import logo from "@/assets/logo.svg";

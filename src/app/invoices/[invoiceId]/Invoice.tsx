@@ -51,7 +51,7 @@ export default function Invoice({ invoice }: InvoiceProps) {
 
     try {
       await updateStatusAction(formData);
-    } catch (err) {
+    } catch {
       setCurrentStatus(originalStatus);
     }
   }
@@ -72,7 +72,7 @@ export default function Invoice({ invoice }: InvoiceProps) {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              {AVAILABLE_STATUSES.map((status) => {
+              {AVAILABLE_STATUSES.map(status => {
                 return (
                   <DropdownMenuItem key={status.id}>
                     <form action={handleOnUpdateStatus}>

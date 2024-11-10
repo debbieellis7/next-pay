@@ -74,7 +74,7 @@ export default async function DashboardPage() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {invoices.map((invoice) => (
+          {invoices.map(invoice => (
             <TableRow key={invoice.id}>
               <TableCell className="text-left font-medium p-0">
                 <Link

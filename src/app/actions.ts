@@ -51,7 +51,7 @@ export async function createAction(formData: FormData) {
       id: Invoices.id,
     });
 
-  const { data, error } = await resend.emails.send({
+  await resend.emails.send({
     from: "NextPay <support@nextpay.live>",
     to: [email],
     subject: "You Have a New Invoice",

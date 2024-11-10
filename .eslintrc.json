@@ -1,3 +1,15 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"]
+  "extends": ["next/core-web-vitals", "next/typescript"],
+  "rules": {
+    // Formatting rules that can be auto-fixed
+    "semi": ["error", "always"], // Enforce semicolons at the end of statements
+    "quotes": ["error", "double"], // Use double quotes for strings
+    "indent": ["error", 2], // Indent with 2 spaces
+    "comma-dangle": ["error", "always-multiline"], // Enforce trailing commas in multiline lists
+    "object-curly-spacing": ["error", "always"], // Enforce spacing inside braces
+    "array-bracket-spacing": ["error", "never"], // No spacing inside array brackets
+    "space-before-function-paren": ["error", "never"], // No space before function parentheses
+    "arrow-parens": ["error", "as-needed"], // Omit parentheses when there’s a single argument
+    "no-multiple-empty-lines": ["error", { "max": 1 }] // Limit multiple empty lines
+  }
 }
