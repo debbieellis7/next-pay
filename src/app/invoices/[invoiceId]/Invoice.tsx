@@ -10,7 +10,7 @@ import { Invoices, Customers } from "@/db/schema";
 
 // Internal components
 import Container from "@/components/Container";
-import { Badge } from "@/components/ui/badge";
+import InvoiceBadge from "@/components/InvoiceBadge";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -28,8 +28,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-// Utilities and actions
-import { cn } from "@/lib/utils";
+// Actions and data
 import { updateStatusAction, deleteInvoiceAction } from "@/app/actions";
 import { AVAILABLE_STATUSES } from "@/data/invoices";
 
@@ -62,17 +61,7 @@ export default function Invoice({ invoice }: InvoiceProps) {
       <div className="flex lg:flex-row lg:justify-between">
         <h1 className="flex items-center gap-4 text-3xl font-bold">
           Invoice {invoice.id}
-          <Badge
-            className={cn(
-              "rounded-full capitalize",
-              currentState === "open" && "bg-blue-500",
-              currentState === "paid" && "bg-green-600",
-              currentState === "void" && "bg-zinc-700",
-              currentState === "uncollectible" && "bg-red-600"
-            )}
-          >
-            {currentState}
-          </Badge>
+          <InvoiceBadge status={currentState} />
         </h1>
         <div className="flex gap-4">
           <DropdownMenu>

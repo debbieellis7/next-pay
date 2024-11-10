@@ -10,6 +10,7 @@ import { Invoices, Customers } from "@/db/schema";
 
 // Internal components
 import Container from "@/components/Container";
+import InvoiceBadge from "@/components/InvoiceBadge";
 import {
   Table,
   TableBody,
@@ -20,7 +21,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 
 export default async function DashboardPage() {
   const { userId, orgId } = await auth();
@@ -99,7 +99,7 @@ export default async function DashboardPage() {
               </TableCell>
               <TableCell className="text-center p-0">
                 <Link href={`/invoices/${invoice.id}`} className="block p-4">
-                  <Badge className="rounded-full">{invoice.status}</Badge>
+                  <InvoiceBadge status={invoice.status} />
                 </Link>
               </TableCell>
               <TableCell className="text-right p-0">
