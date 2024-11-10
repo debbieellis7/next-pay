@@ -12,13 +12,14 @@ interface ConditionalLayoutProps {
   children: ReactNode;
 }
 
-export default function ConditionalLayout({
-  children,
-}: ConditionalLayoutProps) {
+const ConditionalLayout = ({ children }: ConditionalLayoutProps) => {
   const pathname = usePathname();
-  // Check if the path is '/', '/sign-up', or '/sign-in'
+
+  // Check if the path is '/' or starts with '/sign-in' or '/sign-up'
   const hideHeaderFooter =
-    pathname === "/" || pathname === "/sign-up" || pathname === "/sign-in";
+    pathname === "/" ||
+    pathname.startsWith("/sign-in") ||
+    pathname.startsWith("/sign-up");
 
   return (
     <>
@@ -27,4 +28,6 @@ export default function ConditionalLayout({
       {!hideHeaderFooter && <Footer />}
     </>
   );
-}
+};
+
+export default ConditionalLayout;
