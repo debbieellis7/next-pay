@@ -20,11 +20,11 @@ import { createPayment, updateStatusAction } from "@/app/actions";
 const stripe = new Stripe(String(process.env.STRIPE_API_SECRET));
 
 interface PaymentPageProps {
-  params: { invoiceId: string };
-  searchParams: {
+  params: Promise<{ invoiceId: string }>;
+  searchParams: Promise<{
     status: string;
     session_id: string;
-  };
+  }>;
 }
 
 export default async function PaymentPage({
