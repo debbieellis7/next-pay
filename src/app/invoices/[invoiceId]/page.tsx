@@ -13,7 +13,7 @@ import Invoice from "./Invoice";
 export default async function InvoicePage({
   params,
 }: {
-  params: { invoiceId: string };
+  params: Promise<{ invoiceId: string }>;
 }) {
   const { userId, orgId } = await auth();
 
