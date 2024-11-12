@@ -58,7 +58,8 @@ export async function createAction(formData: FormData) {
     react: InvoiceCreatedEmail({ invoiceId: results[0].id }),
   });
 
-  redirect(`/invoices/${results[0].id}`);
+  // Revalidate the /dashboard page to update the list of invoices
+  revalidatePath("/dashboard");
 }
 
 export async function updateStatusAction(formData: FormData) {

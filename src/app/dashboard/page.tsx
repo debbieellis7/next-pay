@@ -1,7 +1,6 @@
 // External dependencies
 import { auth } from "@clerk/nextjs/server";
-import { eq, and, isNull } from "drizzle-orm";
-import { CirclePlus } from "lucide-react";
+import { eq, and, isNull, desc } from "drizzle-orm";
 import Link from "next/link";
 
 // Database configuration and schema
@@ -10,6 +9,7 @@ import { Invoices, Customers } from "@/db/schema";
 
 // Internal components
 import Container from "@/components/Container";
+import CreateInvoice from "./CreateInvoice";
 import InvoiceBadge from "@/components/InvoiceBadge";
 import {
   Table,
@@ -20,28 +20,27 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
 
 export default async function DashboardPage() {
   const { userId, orgId } = await auth();
 
   if (!userId) return;
 
-  let results;
+  const query = db
+    .select()
+    .from(Invoices)
+    .innerJoin(Customers, eq(Invoices.customerId, Customers.id))
+    .orderBy(desc(Invoices.createTs));
 
   if (orgId) {
-    results = await db
-      .select()
-      .from(Invoices)
-      .innerJoin(Customers, eq(Invoices.customerId, Customers.id))
-      .where(eq(Invoices.organizationId, orgId));
+    query.where(eq(Invoices.organizationId, orgId));
   } else {
-    results = await db
-      .select()
-      .from(Invoices)
-      .innerJoin(Customers, eq(Invoices.customerId, Customers.id))
-      .where(and(eq(Invoices.userId, userId), isNull(Invoices.organizationId)));
+    query.where(
+      and(eq(Invoices.userId, userId), isNull(Invoices.organizationId))
+    );
   }
+
+  const results = await query;
 
   const invoices = results.map(({ invoices, customers }) => {
     return {
@@ -54,14 +53,9 @@ export default async function DashboardPage() {
     <Container>
       <div className="flex justify-between mb-7">
         <h1 className="text-3xl font-bold">Dashboard</h1>
-        <p>
-          <Button className="inline-flex gap-2" variant="ghost" asChild>
-            <Link href="/invoices/new">
-              <CirclePlus className="h-4 w-4" /> Create Invoice
-            </Link>
-          </Button>
-        </p>
+        <CreateInvoice />
       </div>
+
       <Table>
         <TableCaption>A list of your recent invoices.</TableCaption>
         <TableHeader>
