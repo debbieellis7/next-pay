@@ -1,7 +1,7 @@
 // External dependencies
 import { auth } from "@clerk/nextjs/server";
 import { eq, and, isNull, desc } from "drizzle-orm";
-import Link from "next/link";
+import { Suspense } from "react";
 
 // Database configuration and schema
 import { db } from "@/db";
@@ -10,21 +10,31 @@ import { Invoices, Customers } from "@/db/schema";
 // Internal components
 import Container from "@/components/Container";
 import CreateInvoice from "./CreateInvoice";
-import InvoiceBadge from "@/components/InvoiceBadge";
+import InvoiceRow from "@/components/InvoiceRow";
 import {
   Table,
   TableBody,
   TableCaption,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import Pagination from "@/components/Pagination";
 
-export default async function DashboardPage() {
+const INVOICES_PER_PAGE = 5;
+
+export default async function DashboardPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page: string | undefined }>;
+}) {
   const { userId, orgId } = await auth();
 
-  if (!userId) return;
+  if (!userId) return null;
+
+  const getSearchParams = await searchParams;
+  const currentPage = getSearchParams.page ? Number(getSearchParams.page) : 1;
+  const offset = INVOICES_PER_PAGE * (currentPage - 1);
 
   const query = db
     .select()
@@ -40,8 +50,12 @@ export default async function DashboardPage() {
     );
   }
 
-  const results = await query;
+  // Total number of invoices
+  const { length: invoicesCount } = await query;
 
+  // Set results limit
+  query.limit(INVOICES_PER_PAGE).offset(offset);
+  const results = await query;
   const invoices = results.map(({ invoices, customers }) => {
     return {
       ...invoices,
@@ -69,45 +83,22 @@ export default async function DashboardPage() {
         </TableHeader>
         <TableBody>
           {invoices.map(invoice => (
-            <TableRow key={invoice.id}>
-              <TableCell className="text-left font-medium p-0">
-                <Link
-                  href={`/invoices/${invoice.id}`}
-                  className="font-semibold block p-4"
-                >
-                  {new Date(invoice.createTs).toLocaleDateString()}
-                </Link>
-              </TableCell>
-              <TableCell className="text-left p-0">
-                <Link
-                  href={`/invoices/${invoice.id}`}
-                  className="font-semibold block p-4"
-                >
-                  {invoice.customer.name}
-                </Link>
-              </TableCell>
-              <TableCell className="text-left p-0">
-                <Link href={`/invoices/${invoice.id}`} className="block p-4">
-                  {invoice.customer.email}
-                </Link>
-              </TableCell>
-              <TableCell className="text-center p-0">
-                <Link href={`/invoices/${invoice.id}`} className="block p-4">
-                  <InvoiceBadge status={invoice.status} />
-                </Link>
-              </TableCell>
-              <TableCell className="text-right p-0">
-                <Link
-                  href={`/invoices/${invoice.id}`}
-                  className="font-semibold block p-4"
-                >
-                  $ {(invoice.value / 100).toFixed(2)}
-                </Link>
-              </TableCell>
-            </TableRow>
+            <InvoiceRow key={invoice.id} invoice={invoice} />
           ))}
         </TableBody>
       </Table>
+
+      <Suspense
+        fallback={
+          <div className="text-center mt-4">Preparing pagination...</div>
+        }
+      >
+        <Pagination
+          currentPage={currentPage}
+          invoicesCount={invoicesCount}
+          perPage={INVOICES_PER_PAGE}
+        />
+      </Suspense>
     </Container>
   );
 }
