@@ -4,7 +4,7 @@
 import Image from "next/image";
 import { useUser } from "@clerk/nextjs";
 import Link from "next/link";
-import { PersonIcon, DashboardIcon } from "@radix-ui/react-icons";
+import { PersonIcon, DoubleArrowRightIcon } from "@radix-ui/react-icons";
 
 // Assets
 import logo from "@/assets/logo.svg";
@@ -44,7 +44,7 @@ const Hero = () => {
               href="/dashboard"
               className="inline-flex items-center justify-center px-5 py-3 text-sm font-medium text-gray-900 border border-gray-200 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
             >
-              <DashboardIcon className="mr-2" />
+              <DoubleArrowRightIcon className="mr-2" />
               Dashboard
             </Link>
           ) : (

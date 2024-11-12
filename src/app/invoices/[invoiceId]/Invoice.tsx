@@ -129,7 +129,6 @@ export default function Invoice({ invoice }: InvoiceProps) {
                       variant="destructive"
                       className="flex items-center gap-2"
                     >
-                      <Trash2 className="w-4 h-auto" />
                       Delete Invoice
                     </Button>
                   </form>
